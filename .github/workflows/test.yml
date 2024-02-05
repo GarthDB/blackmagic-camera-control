@@ -1,11 +1,16 @@
 name: Test
-on: push
+on: pull_request
 jobs:
-  build:
+  ci:
+    name: CI
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Install modules
-      run: yarn
-    - name: Run tests
-      run: yarn test
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: moonrepo/setup-toolchain@v0
+      - run: moon ci
+      - uses: moonrepo/run-report-action@v1
+        if: success() || failure()
+        with:
+          access-token: ${{ secrets.GH_TOKEN }}

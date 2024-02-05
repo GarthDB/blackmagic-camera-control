@@ -1,19 +1,31 @@
 name: Release
+
 on:
   push:
     branches:
-      - 'main'
-      - 'next'
+      - main
+      - beta
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
-  release:
+  ci:
+    name: CI
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install modules
-        run: yarn
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: moonrepo/setup-toolchain@v0
+        with:
+          auto-install: true
+      - run: moon ci
+      - name: Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          commit: "chore: release"
+          publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
