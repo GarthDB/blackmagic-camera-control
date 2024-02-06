@@ -4,7 +4,7 @@ info:
   description: API for controlling Transport on Blackmagic Design products.
   version: 1.0.0
 servers:
-- url: /control/api/v1
+  - url: /control/api/v1
 paths:
   /transports/0:
     get:
@@ -15,20 +15,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TransportResponse'
+                $ref: "#/components/schemas/TransportResponse"
     put:
       summary: Set device's basic transport status.
       requestBody:
-          description: Set the transport mode
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  mode:
-                    type: string
-                    description: Transport mode.
-                    enum:
+        description: Set the transport mode
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mode:
+                  type: string
+                  description: Transport mode.
+                  enum:
                     - InputPreview
                     - Output
       responses:
@@ -73,9 +73,9 @@ paths:
         200:
           description: OK
           content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Playback'
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Playback"
     put:
       summary: Set playback state.
       requestBody:
@@ -83,7 +83,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Playback'
+              $ref: "#/components/schemas/Playback"
       responses:
         204:
           description: No Content
@@ -96,7 +96,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetRecord'
+                $ref: "#/components/schemas/GetRecord"
     put:
       summary: Set record state.
       requestBody:
@@ -104,7 +104,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Record'
+              $ref: "#/components/schemas/Record"
       responses:
         204:
           description: No Content
@@ -117,7 +117,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Timecode'
+                $ref: "#/components/schemas/Timecode"
   /transports/0/timecode/source:
     get:
       summary: Get timecode source selected on device
@@ -127,7 +127,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TimecodeSource'
+                $ref: "#/components/schemas/TimecodeSource"
 
 components:
   schemas:
@@ -138,9 +138,9 @@ components:
           type: string
           description: Transport mode.
           enum:
-          - InputPreview
-          - InputRecord
-          - Output
+            - InputPreview
+            - InputRecord
+            - Output
     Stopped:
       type: object
       description: True when transport mode is InputPreview or when in Output mode and speed is 0
@@ -153,10 +153,10 @@ components:
         type:
           type: string
           enum:
-          - Play
-          - Jog
-          - Shuttle
-          - Var
+            - Play
+            - Jog
+            - Shuttle
+            - Var
         loop:
           type: boolean
           description: When true playback loops from the end of the timeline to the beginning of the timeline

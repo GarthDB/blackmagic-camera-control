@@ -4,7 +4,7 @@ info:
   description: API For controlling the color correction on Blackmagic Design products based on DaVinci Resolve Color Corrector
   version: 0.2.0
 servers:
-- url: /control/api/v1
+  - url: /control/api/v1
 paths:
   /colorCorrection/lift:
     get:
@@ -15,14 +15,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Lift'
+                $ref: "#/components/schemas/Lift"
     put:
       summary: Set color correction lift
       requestBody:
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/Lift'
+            schema:
+              $ref: "#/components/schemas/Lift"
       responses:
         200:
           description: OK
@@ -35,14 +35,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Gamma'
+                $ref: "#/components/schemas/Gamma"
     put:
       summary: Set color correction gamma
       requestBody:
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/Gamma'
+            schema:
+              $ref: "#/components/schemas/Gamma"
       responses:
         200:
           description: OK
@@ -55,14 +55,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Gain'
+                $ref: "#/components/schemas/Gain"
     put:
       summary: Set color correction gain
       requestBody:
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/Gain'
+            schema:
+              $ref: "#/components/schemas/Gain"
       responses:
         200:
           description: OK
@@ -75,14 +75,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Offset'
+                $ref: "#/components/schemas/Offset"
     put:
       summary: Set color correction offset
       requestBody:
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/Offset'
+            schema:
+              $ref: "#/components/schemas/Offset"
       responses:
         200:
           description: OK
@@ -95,14 +95,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Contrast'
+                $ref: "#/components/schemas/Contrast"
     put:
       summary: Set color correction contrast
       requestBody:
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/Contrast'
+            schema:
+              $ref: "#/components/schemas/Contrast"
       responses:
         200:
           description: OK
@@ -115,14 +115,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Color'
+                $ref: "#/components/schemas/Color"
     put:
       summary: Set color correction color properties
       requestBody:
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/Color'
+            schema:
+              $ref: "#/components/schemas/Color"
       responses:
         200:
           description: OK
@@ -135,14 +135,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LumaContribution'
+                $ref: "#/components/schemas/LumaContribution"
     put:
       summary: Set color correction luma contribution
       requestBody:
         content:
           application/json:
-              schema:
-                $ref: '#/components/schemas/LumaContribution'
+            schema:
+              $ref: "#/components/schemas/LumaContribution"
       responses:
         200:
           description: OK

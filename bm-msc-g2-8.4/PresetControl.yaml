@@ -4,7 +4,7 @@ info:
   description: API For controlling the presets on Blackmagic Design products
   version: 0.1.0
 servers:
-- url: /control/api/v1
+  - url: /control/api/v1
 paths:
   /presets:
     get:
@@ -15,7 +15,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/presetList'
+                $ref: "#/components/schemas/presetList"
     post:
       summary: Send a preset file to the camera
       requestBody:
@@ -30,7 +30,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/postPresetResponse'
+                $ref: "#/components/schemas/postPresetResponse"
   /presets/active:
     get:
       summary: Get the list of the presets on the camera
@@ -40,14 +40,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/activePreset'
+                $ref: "#/components/schemas/activePreset"
     put:
       summary: Set the active preset on the camera
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/activePreset'
+              $ref: "#/components/schemas/activePreset"
       responses:
         200:
           description: OK

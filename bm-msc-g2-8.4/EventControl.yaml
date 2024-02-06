@@ -4,7 +4,7 @@ info:
   description: API For working with built-in websocket.
   version: 1.0.0
 servers:
-- url: /control/api/v1
+  - url: /control/api/v1
 paths:
   /event/list:
     get:
@@ -15,7 +15,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/eventsList'
+                $ref: "#/components/schemas/eventsList"
 components:
   schemas:
     eventsList:

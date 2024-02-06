@@ -1,6 +1,6 @@
 ---
 servers:
-- url: "http://localhost:8080"
+  - url: "http://localhost:8080"
 openapi: "3.0.1"
 paths:
   /presets/{presetName}:

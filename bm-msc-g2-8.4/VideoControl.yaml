@@ -4,7 +4,7 @@ info:
   description: API For controlling the video on Blackmagic Design products
   version: 0.1.0
 servers:
-- url: /control/api/v1
+  - url: /control/api/v1
 paths:
   /video/iso:
     get:
@@ -184,7 +184,7 @@ paths:
                 type: object
                 properties:
                   displayMode:
-                    $ref: '#/components/schemas/ndFilterDisplayMode'
+                    $ref: "#/components/schemas/ndFilterDisplayMode"
     put:
       summary: Set ND filter display mode on the camera
       requestBody:
@@ -194,7 +194,7 @@ paths:
               type: object
               properties:
                 displayMode:
-                  $ref: '#/components/schemas/ndFilterDisplayMode'
+                  $ref: "#/components/schemas/ndFilterDisplayMode"
       responses:
         200:
           description: OK
@@ -213,9 +213,9 @@ paths:
                     type: boolean
                     description: Is shutter controlled by auto exposure
                   shutterSpeed:
-                    $ref: '#/components/schemas/shutterSpeed'
+                    $ref: "#/components/schemas/shutterSpeed"
                   shutterAngle:
-                    $ref: '#/components/schemas/shutterAngle'
+                    $ref: "#/components/schemas/shutterAngle"
     put:
       summary: Set current shutter
       requestBody:
@@ -226,9 +226,9 @@ paths:
               type: object
               properties:
                 shutterSpeed:
-                  $ref: '#/components/schemas/shutterSpeed'
+                  $ref: "#/components/schemas/shutterSpeed"
                 shutterAngle:
-                  $ref: '#/components/schemas/shutterAngle'
+                  $ref: "#/components/schemas/shutterAngle"
       responses:
         200:
           description: OK
@@ -244,7 +244,7 @@ paths:
                 type: object
                 properties:
                   mode:
-                    $ref: '#/components/schemas/autoExposureMode'
+                    $ref: "#/components/schemas/autoExposureMode"
     put:
       summary: Set auto exposure
       requestBody:
@@ -255,7 +255,7 @@ paths:
               type: object
               properties:
                 mode:
-                  $ref: '#/components/schemas/autoExposureMode'
+                  $ref: "#/components/schemas/autoExposureMode"
       responses:
         200:
           description: OK
@@ -283,4 +283,3 @@ components:
     ndFilterDisplayMode:
       type: string
       enum: ["Stop", "Number", "Fraction"]
-

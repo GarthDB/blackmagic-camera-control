@@ -4,7 +4,7 @@ info:
   description: API For controlling the lens on Blackmagic Design products
   version: 0.1.0
 servers:
-- url: /control/api/v1
+  - url: /control/api/v1
 paths:
   /lens/iris:
     get:
@@ -21,26 +21,26 @@ paths:
                     type: boolean
                     description: Is Aperture controlled by auto exposure
                   apertureStop:
-                    $ref: '#/components/schemas/apertureStop'
+                    $ref: "#/components/schemas/apertureStop"
                   normalised:
-                    $ref: '#/components/schemas/normalised'
+                    $ref: "#/components/schemas/normalised"
                   apertureNumber:
-                    $ref: '#/components/schemas/apertureNumber'
+                    $ref: "#/components/schemas/apertureNumber"
     put:
       summary: Set lens' aperture
       requestBody:
         description: Only a single property need to be selected. If multiple provided, the order of priority is (apertureStop > normalised > apertureNumber)
         content:
           application/json:
-              schema:
-                type: object
-                properties:
-                  apertureStop:
-                    $ref: '#/components/schemas/apertureStop'
-                  normalised:
-                    $ref: '#/components/schemas/normalised'
-                  apertureNumber:
-                    $ref: '#/components/schemas/apertureNumber'
+            schema:
+              type: object
+              properties:
+                apertureStop:
+                  $ref: "#/components/schemas/apertureStop"
+                normalised:
+                  $ref: "#/components/schemas/normalised"
+                apertureNumber:
+                  $ref: "#/components/schemas/apertureNumber"
       responses:
         200:
           description: OK
@@ -56,22 +56,22 @@ paths:
                 type: object
                 properties:
                   focalLength:
-                    $ref: '#/components/schemas/focalLength'
+                    $ref: "#/components/schemas/focalLength"
                   normalised:
-                    $ref: '#/components/schemas/normalised'
+                    $ref: "#/components/schemas/normalised"
     put:
       summary: Set lens' zoom
       requestBody:
         description: Only a single property need to be selected. If multiple provided, the order of priority is (focalLength > normalised)
         content:
           application/json:
-              schema:
-                type: object
-                properties:
-                  focalLength:
-                    $ref: '#/components/schemas/focalLength'
-                  normalised:
-                    $ref: '#/components/schemas/normalised'
+            schema:
+              type: object
+              properties:
+                focalLength:
+                  $ref: "#/components/schemas/focalLength"
+                normalised:
+                  $ref: "#/components/schemas/normalised"
       responses:
         200:
           description: OK
@@ -87,17 +87,17 @@ paths:
                 type: object
                 properties:
                   focus:
-                    $ref: '#/components/schemas/normalised'
+                    $ref: "#/components/schemas/normalised"
     put:
       summary: Set lens' focus
       requestBody:
         content:
           application/json:
-              schema:
-                type: object
-                properties:
-                  focus:
-                    $ref: '#/components/schemas/normalised'
+            schema:
+              type: object
+              properties:
+                focus:
+                  $ref: "#/components/schemas/normalised"
       responses:
         200:
           description: OK

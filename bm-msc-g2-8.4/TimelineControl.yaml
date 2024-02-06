@@ -4,7 +4,7 @@ info:
   description: API for controlling playback timeline.
   version: 1.0.0
 servers:
-- url: /control/api/v1
+  - url: /control/api/v1
 paths:
   /timelines/0:
     get:
@@ -15,7 +15,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Timeline'
+                $ref: "#/components/schemas/Timeline"
     delete:
       summary: Clear the current playback timeline.
       responses:
@@ -29,7 +29,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AddClip'
+              $ref: "#/components/schemas/AddClip"
       responses:
         204:
           description: No Content
