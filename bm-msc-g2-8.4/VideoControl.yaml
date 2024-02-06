@@ -1,0 +1,286 @@
+openapi: 3.0.1
+info:
+  title: Video Control API
+  description: API For controlling the video on Blackmagic Design products
+  version: 0.1.0
+servers:
+- url: /control/api/v1
+paths:
+  /video/iso:
+    get:
+      summary: Get current ISO
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  iso:
+                    type: integer
+                    description: Current ISO value
+                    maximum: 2147483647
+                    minimum: 0
+    put:
+      summary: Set current ISO
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                iso:
+                  type: integer
+                  description: ISO value to set
+                  maximum: 2147483647
+                  minimum: 0
+      responses:
+        200:
+          description: OK
+  /video/gain:
+    get:
+      summary: Get current gain value in decibels
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  gain:
+                    type: integer
+                    description: Current gain value in decibels
+                    maximum: 128
+                    minimum: -128
+    put:
+      summary: Set current gain value
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gain:
+                  type: integer
+                  description: Gain value in decibels to set
+                  maximum: 128
+                  minimum: -128
+      responses:
+        200:
+          description: OK
+  /video/whiteBalance:
+    get:
+      summary: Get current white balance
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  whiteBalance:
+                    type: integer
+                    description: Current white balance
+                    maximum: 10000
+                    minimum: 2500
+    put:
+      summary: Set current white balance
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                whiteBalance:
+                  type: integer
+                  description: White balance to set
+                  maximum: 10000
+                  minimum: 2500
+      responses:
+        200:
+          description: OK
+  /video/whiteBalance/doAuto:
+    put:
+      summary: Set current white balance automatically
+      responses:
+        200:
+          description: OK
+  /video/whiteBalanceTint:
+    get:
+      summary: Get white balance tint
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  whiteBalanceTint:
+                    type: integer
+                    description: Current white balance tint
+                    maximum: 50
+                    minimum: -50
+    put:
+      summary: Set white balance tint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                whiteBalanceTint:
+                  type: integer
+                  description: White balance tint to set
+                  maximum: 50
+                  minimum: -50
+      responses:
+        200:
+          description: OK
+  /video/ndFilter:
+    get:
+      summary: Get ND filter stop
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stop:
+                    type: number
+                    description: Current filter power (fStop)
+                    maximum: 15.0
+                    minimum: 0.0
+    put:
+      summary: Set ND filter stop
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stop:
+                  type: number
+                  description: Filter power (fStop) to set
+                  maximum: 15.0
+                  minimum: 0.0
+      responses:
+        200:
+          description: OK
+  /video/ndFilter/displayMode:
+    get:
+      summary: Get ND filter display mode on the camera
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  displayMode:
+                    $ref: '#/components/schemas/ndFilterDisplayMode'
+    put:
+      summary: Set ND filter display mode on the camera
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                displayMode:
+                  $ref: '#/components/schemas/ndFilterDisplayMode'
+      responses:
+        200:
+          description: OK
+  /video/shutter:
+    get:
+      summary: Get current shutter. Will return either shutter speed or shutter angle depending on shutter measurement in device settings
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  continuousShutterAutoExposure:
+                    type: boolean
+                    description: Is shutter controlled by auto exposure
+                  shutterSpeed:
+                    $ref: '#/components/schemas/shutterSpeed'
+                  shutterAngle:
+                    $ref: '#/components/schemas/shutterAngle'
+    put:
+      summary: Set current shutter
+      requestBody:
+        description: Only a single property needs to be selected. If more than one is provided, the order of priority is (shutterSpeed > shutterAngle)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                shutterSpeed:
+                  $ref: '#/components/schemas/shutterSpeed'
+                shutterAngle:
+                  $ref: '#/components/schemas/shutterAngle'
+      responses:
+        200:
+          description: OK
+  /video/autoExposure:
+    get:
+      summary: Get current auto exposure mode
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mode:
+                    $ref: '#/components/schemas/autoExposureMode'
+    put:
+      summary: Set auto exposure
+      requestBody:
+        description: Auto exposure mode to set
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mode:
+                  $ref: '#/components/schemas/autoExposureMode'
+      responses:
+        200:
+          description: OK
+components:
+  schemas:
+    shutterSpeed:
+      type: integer
+      description: Shutter speed value in fractions of a second (minimum is sensor frame rate)
+      maximum: 50000
+    shutterAngle:
+      type: integer
+      description: Shutter angle
+      maximum: 36000
+      minimum: 100
+    autoExposureMode:
+      type: object
+      description: Auto exposure mode
+      properties:
+        mode:
+          type: string
+          enum: ["Off", "Continuous", "OneShot"]
+        type:
+          type: string
+          enum: ["", "Iris", "Shutter", "Iris,Shutter", "Shutter,Iris"]
+    ndFilterDisplayMode:
+      type: string
+      enum: ["Stop", "Number", "Fraction"]
+

@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: Timeline Control API
+  description: API for controlling playback timeline.
+  version: 1.0.0
+servers:
+- url: /control/api/v1
+paths:
+  /timelines/0:
+    get:
+      summary: Get the current playback timeline.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timeline'
+    delete:
+      summary: Clear the current playback timeline.
+      responses:
+        204:
+          description: No Content
+  /timelines/0/add:
+    post:
+      summary: Add a clip to the end of the timeline.
+      requestBody:
+        description: Clip information to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddClip'
+      responses:
+        204:
+          description: No Content
+components:
+  schemas:
+    Timeline:
+      type: object
+      properties:
+        clips:
+          type: array
+          items:
+            type: object
+            properties:
+              clipUniqueId:
+                type: integer
+                description: Unique ID used to identify this clip
+                example: 1
+              frameCount:
+                type: integer
+                description: Number of frames in this clip on the timeline
+                example: 90000
+    AddClip:
+      oneOf:
+        - type: object
+          properties:
+            clips:
+              type: integer
+              description: Unique ID used to identify this clip
+              example: 1
+        - type: object
+          properties:
+            clips:
+              type: array
+              items:
+                type: integer
+                description: Unique ID used to identify this clip
+              example: [1, 2, 3]

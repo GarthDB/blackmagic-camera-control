@@ -6,7 +6,8 @@
   "scripts": {
     "pre-commit": "lint-staged",
     "prepare": "husky install",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "generate-api": "openapi-generator-cli generate -g typescript-node --input-spec-root-directory bm-msc-g2-8.4/ -o packages/sdk -p supportsES6=true"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,115 @@
+---
+servers:
+- url: "http://localhost:8080"
+openapi: "3.0.1"
+paths:
+  /presets/{presetName}:
+    $ref: "./PresetControl.yaml#/paths/~1presets~1{presetName}"
+  /media/workingset:
+    $ref: "./MediaControl.yaml#/paths/~1media~1workingset"
+  /audio/channel/{channelIndex}/available:
+    $ref: "./AudioControl.yaml#/paths/~1audio~1channel~1{channelIndex}~1available"
+  /transports/0/play:
+    $ref: "./TransportControl.yaml#/paths/~1transports~10~1play"
+  /transports/0:
+    $ref: "./TransportControl.yaml#/paths/~1transports~10"
+  /audio/channel/{channelIndex}/phantomPower:
+    $ref: "./AudioControl.yaml#/paths/~1audio~1channel~1{channelIndex}~1phantomPower"
+  /video/autoExposure:
+    $ref: "./VideoControl.yaml#/paths/~1video~1autoExposure"
+  /audio/channel/{channelIndex}/supportedInputs:
+    $ref: "./AudioControl.yaml#/paths/~1audio~1channel~1{channelIndex}~1supportedInputs"
+  /colorCorrection/contrast:
+    $ref: "./ColorCorrectionControl.yaml#/paths/~1colorCorrection~1contrast"
+  /media/devices/{deviceName}/doformat:
+    $ref: "./MediaControl.yaml#/paths/~1media~1devices~1{deviceName}~1doformat"
+  /lens/iris:
+    $ref: "./LensControl.yaml#/paths/~1lens~1iris"
+  /lens/focus/doAutoFocus:
+    $ref: "./LensControl.yaml#/paths/~1lens~1focus~1doAutoFocus"
+  /video/whiteBalance:
+    $ref: "./VideoControl.yaml#/paths/~1video~1whiteBalance"
+  /video/ndFilter/displayMode:
+    $ref: "./VideoControl.yaml#/paths/~1video~1ndFilter~1displayMode"
+  /system/format:
+    $ref: "./SystemControl.yaml#/paths/~1system~1format"
+  /video/whiteBalance/doAuto:
+    $ref: "./VideoControl.yaml#/paths/~1video~1whiteBalance~1doAuto"
+  /system/codecFormat:
+    $ref: "./SystemControl.yaml#/paths/~1system~1codecFormat"
+  /transports/0/playback:
+    $ref: "./TransportControl.yaml#/paths/~1transports~10~1playback"
+  /audio/channel/{channelIndex}/input:
+    $ref: "./AudioControl.yaml#/paths/~1audio~1channel~1{channelIndex}~1input"
+  /transports/0/timecode/source:
+    $ref: "./TransportControl.yaml#/paths/~1transports~10~1timecode~1source"
+  /media/devices/doformatSupportedFilesystems:
+    $ref: "./MediaControl.yaml#/paths/~1media~1devices~1doformatSupportedFilesystems"
+  /media/active:
+    $ref: "./MediaControl.yaml#/paths/~1media~1active"
+  /video/ndFilter:
+    $ref: "./VideoControl.yaml#/paths/~1video~1ndFilter"
+  /system/supportedCodecFormats:
+    $ref: "./SystemControl.yaml#/paths/~1system~1supportedCodecFormats"
+  /presets:
+    $ref: "./PresetControl.yaml#/paths/~1presets"
+  /colorCorrection/lumaContribution:
+    $ref: "./ColorCorrectionControl.yaml#/paths/~1colorCorrection~1lumaContribution"
+  /timelines/0:
+    $ref: "./TimelineControl.yaml#/paths/~1timelines~10"
+  /system/videoFormat:
+    $ref: "./SystemControl.yaml#/paths/~1system~1videoFormat"
+  /transports/0/timecode:
+    $ref: "./TransportControl.yaml#/paths/~1transports~10~1timecode"
+  /transports/0/stop:
+    $ref: "./TransportControl.yaml#/paths/~1transports~10~1stop"
+  /colorCorrection/offset:
+    $ref: "./ColorCorrectionControl.yaml#/paths/~1colorCorrection~1offset"
+  /colorCorrection/gain:
+    $ref: "./ColorCorrectionControl.yaml#/paths/~1colorCorrection~1gain"
+  /video/shutter:
+    $ref: "./VideoControl.yaml#/paths/~1video~1shutter"
+  /audio/channel/{channelIndex}/input/description:
+    $ref: "./AudioControl.yaml#/paths/~1audio~1channel~1{channelIndex}~1input~1description"
+  /video/whiteBalanceTint:
+    $ref: "./VideoControl.yaml#/paths/~1video~1whiteBalanceTint"
+  /lens/focus:
+    $ref: "./LensControl.yaml#/paths/~1lens~1focus"
+  /lens/zoom:
+    $ref: "./LensControl.yaml#/paths/~1lens~1zoom"
+  /video/gain:
+    $ref: "./VideoControl.yaml#/paths/~1video~1gain"
+  /event/list:
+    $ref: "./EventControl.yaml#/paths/~1event~1list"
+  /presets/active:
+    $ref: "./PresetControl.yaml#/paths/~1presets~1active"
+  /transports/0/record:
+    $ref: "./TransportControl.yaml#/paths/~1transports~10~1record"
+  /colorCorrection/lift:
+    $ref: "./ColorCorrectionControl.yaml#/paths/~1colorCorrection~1lift"
+  /audio/channel/{channelIndex}/padding:
+    $ref: "./AudioControl.yaml#/paths/~1audio~1channel~1{channelIndex}~1padding"
+  /system/supportedVideoFormats:
+    $ref: "./SystemControl.yaml#/paths/~1system~1supportedVideoFormats"
+  /system/supportedFormats:
+    $ref: "./SystemControl.yaml#/paths/~1system~1supportedFormats"
+  /audio/channel/{channelIndex}/level:
+    $ref: "./AudioControl.yaml#/paths/~1audio~1channel~1{channelIndex}~1level"
+  /media/devices/{deviceName}:
+    $ref: "./MediaControl.yaml#/paths/~1media~1devices~1{deviceName}"
+  /timelines/0/add:
+    $ref: "./TimelineControl.yaml#/paths/~1timelines~10~1add"
+  /colorCorrection/color:
+    $ref: "./ColorCorrectionControl.yaml#/paths/~1colorCorrection~1color"
+  /colorCorrection/gamma:
+    $ref: "./ColorCorrectionControl.yaml#/paths/~1colorCorrection~1gamma"
+  /video/iso:
+    $ref: "./VideoControl.yaml#/paths/~1video~1iso"
+  /audio/channel/{channelIndex}/lowCutFilter:
+    $ref: "./AudioControl.yaml#/paths/~1audio~1channel~1{channelIndex}~1lowCutFilter"
+  /system:
+    $ref: "./SystemControl.yaml#/paths/~1system"
+info:
+  title: "merged spec"
+  description: "merged spec"
+  version: "1.0.0"

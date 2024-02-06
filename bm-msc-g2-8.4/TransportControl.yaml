@@ -1,0 +1,201 @@
+openapi: 3.0.1
+info:
+  title: Transport Control API
+  description: API for controlling Transport on Blackmagic Design products.
+  version: 1.0.0
+servers:
+- url: /control/api/v1
+paths:
+  /transports/0:
+    get:
+      summary: Get device's basic transport status.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportResponse'
+    put:
+      summary: Set device's basic transport status.
+      requestBody:
+          description: Set the transport mode
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mode:
+                    type: string
+                    description: Transport mode.
+                    enum:
+                    - InputPreview
+                    - Output
+      responses:
+        204:
+          description: No Content
+  /transports/0/stop:
+    get:
+      summary: Determine if transport is stopped.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: True when transport mode is InputPreview or when in Output mode and speed is 0
+                type: boolean
+    put:
+      summary: Stop transport.
+      responses:
+        204:
+          description: No Content
+  /transports/0/play:
+    get:
+      summary: Determine if transport is playing.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                description: True when transport is in Output mode and speed is non-zero
+                type: boolean
+    put:
+      summary: Start playing on transport.
+      responses:
+        204:
+          description: No Content
+  /transports/0/playback:
+    get:
+      summary: Get playback state.
+      responses:
+        200:
+          description: OK
+          content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Playback'
+    put:
+      summary: Set playback state.
+      requestBody:
+        description: Update playback state
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Playback'
+      responses:
+        204:
+          description: No Content
+  /transports/0/record:
+    get:
+      summary: Get record state.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecord'
+    put:
+      summary: Set record state.
+      requestBody:
+        description: Update record state
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Record'
+      responses:
+        204:
+          description: No Content
+  /transports/0/timecode:
+    get:
+      summary: Get device's timecode.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Timecode'
+  /transports/0/timecode/source:
+    get:
+      summary: Get timecode source selected on device
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimecodeSource'
+
+components:
+  schemas:
+    TransportResponse:
+      type: object
+      properties:
+        mode:
+          type: string
+          description: Transport mode.
+          enum:
+          - InputPreview
+          - InputRecord
+          - Output
+    Stopped:
+      type: object
+      description: True when transport mode is InputPreview or when in Output mode and speed is 0
+      properties:
+        stopped:
+          type: boolean
+    Playback:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Play
+          - Jog
+          - Shuttle
+          - Var
+        loop:
+          type: boolean
+          description: When true playback loops from the end of the timeline to the beginning of the timeline
+        singleClip:
+          type: boolean
+          description: When true playback loops from the end of the current clip to the beginning of the current clip
+        speed:
+          type: number
+          description: Playback Speed, 1.0 for normal forward playback
+        position:
+          type: integer
+          description: Playback position on the timeline in units of video frames
+    GetRecord:
+      type: object
+      properties:
+        recording:
+          type: boolean
+          description: Is transport in Input Record mode
+    Record:
+      type: object
+      properties:
+        recording:
+          type: boolean
+          description: Is transport in Input Record mode
+        clipName:
+          type: string
+          description: Used to set the requested clipName to record to, when specifying "recording" attribute to True
+    Timecode:
+      type: object
+      properties:
+        timecode:
+          type: number
+          description: The time of day timecode in units of binary-coded decimal (BCD).
+        clip:
+          type: number
+          description: The position of the clip timecode in units of binary-coded decimal (BCD).
+    TimecodeSource:
+      type: object
+      properties:
+        timecode:
+          type: string
+          enum: [Timecode, Clip]

@@ -1,0 +1,129 @@
+openapi: 3.0.1
+info:
+  title: Preset Control API
+  description: API For controlling the presets on Blackmagic Design products
+  version: 0.1.0
+servers:
+- url: /control/api/v1
+paths:
+  /presets:
+    get:
+      summary: Get the list of the presets on the camera
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/presetList'
+    post:
+      summary: Send a preset file to the camera
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/postPresetResponse'
+  /presets/active:
+    get:
+      summary: Get the list of the presets on the camera
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/activePreset'
+    put:
+      summary: Set the active preset on the camera
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/activePreset'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /presets/{presetName}:
+    get:
+      summary: Download the preset file
+      parameters:
+        - in: path
+          name: presetName
+          description: name of the preset file
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+    put:
+      summary: Update a preset on the camera if it exists, if not create a preset and save current state with the presetName
+      parameters:
+        - in: path
+          name: presetName
+          description: name of the preset file
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      summary: Delete a preset from a camera if exists
+      parameters:
+        - in: path
+          name: presetName
+          description: name of the preset file
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+
+components:
+  schemas:
+    presetList:
+      type: object
+      properties:
+        presets:
+          type: array
+          items:
+            type: string
+          description: List of the presets on the camera
+    postPresetResponse:
+      type: object
+      properties:
+        presetAdded:
+          type: string
+          description: Name of the preset uploaded
+    activePreset:
+      type: object
+      properties:
+        preset:
+          type: string

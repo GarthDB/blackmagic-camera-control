@@ -1,0 +1,277 @@
+openapi: 3.0.1
+info:
+  title: Color Correction Control API
+  description: API For controlling the color correction on Blackmagic Design products based on DaVinci Resolve Color Corrector
+  version: 0.2.0
+servers:
+- url: /control/api/v1
+paths:
+  /colorCorrection/lift:
+    get:
+      summary: Get color correction lift
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lift'
+    put:
+      summary: Set color correction lift
+      requestBody:
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/Lift'
+      responses:
+        200:
+          description: OK
+  /colorCorrection/gamma:
+    get:
+      summary: Get color correction gamma
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gamma'
+    put:
+      summary: Set color correction gamma
+      requestBody:
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/Gamma'
+      responses:
+        200:
+          description: OK
+  /colorCorrection/gain:
+    get:
+      summary: Get color correction gain
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Gain'
+    put:
+      summary: Set color correction gain
+      requestBody:
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/Gain'
+      responses:
+        200:
+          description: OK
+  /colorCorrection/offset:
+    get:
+      summary: Get color correction offset
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Offset'
+    put:
+      summary: Set color correction offset
+      requestBody:
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/Offset'
+      responses:
+        200:
+          description: OK
+  /colorCorrection/contrast:
+    get:
+      summary: Get color correction contrast
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contrast'
+    put:
+      summary: Set color correction contrast
+      requestBody:
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/Contrast'
+      responses:
+        200:
+          description: OK
+  /colorCorrection/color:
+    get:
+      summary: Get color correction color properties
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Color'
+    put:
+      summary: Set color correction color properties
+      requestBody:
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/Color'
+      responses:
+        200:
+          description: OK
+  /colorCorrection/lumaContribution:
+    get:
+      summary: Get color correction luma contribution
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LumaContribution'
+    put:
+      summary: Set color correction luma contribution
+      requestBody:
+        content:
+          application/json:
+              schema:
+                $ref: '#/components/schemas/LumaContribution'
+      responses:
+        200:
+          description: OK
+
+components:
+  schemas:
+    Lift:
+      type: object
+      properties:
+        red:
+          type: number
+          maximum: 2.0
+          minimum: -2.0
+          default: 0.0
+        green:
+          type: number
+          maximum: 2.0
+          minimum: -2.0
+          default: 0.0
+        blue:
+          type: number
+          maximum: 2.0
+          minimum: -2.0
+          default: 0.0
+        luma:
+          type: number
+          maximum: 2.0
+          minimum: -2.0
+          default: 0.0
+    Gamma:
+      type: object
+      properties:
+        red:
+          type: number
+          maximum: 4.0
+          minimum: -4.0
+          default: 0.0
+        green:
+          type: number
+          maximum: 4.0
+          minimum: -4.0
+          default: 0.0
+        blue:
+          type: number
+          maximum: 4.0
+          minimum: -4.0
+          default: 0.0
+        luma:
+          type: number
+          maximum: 4.0
+          minimum: -4.0
+          default: 0.0
+    Gain:
+      type: object
+      properties:
+        red:
+          type: number
+          maximum: 16.0
+          minimum: 0.0
+          default: 0.0
+        green:
+          type: number
+          maximum: 16.0
+          minimum: 0.0
+          default: 0.0
+        blue:
+          type: number
+          maximum: 16.0
+          minimum: 0.0
+          default: 0.0
+        luma:
+          type: number
+          maximum: 16.0
+          minimum: 0.0
+          default: 0.0
+    Offset:
+      type: object
+      properties:
+        red:
+          type: number
+          maximum: 8.0
+          minimum: -8.0
+          default: 0.0
+        green:
+          type: number
+          maximum: 8.0
+          minimum: -8.0
+          default: 0.0
+        blue:
+          type: number
+          maximum: 8.0
+          minimum: -8.0
+          default: 0.0
+        luma:
+          type: number
+          maximum: 8.0
+          minimum: -8.0
+          default: 0.0
+    Contrast:
+      type: object
+      properties:
+        pivot:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          default: 0.5
+        adjust:
+          type: number
+          maximum: 2.0
+          minimum: 0.0
+          default: 1.0
+    Color:
+      type: object
+      properties:
+        hue:
+          type: number
+          maximum: 1.0
+          minimum: -1.0
+          default: 0.0
+        saturation:
+          type: number
+          maximum: 2.0
+          minimum: 0.0
+          default: 1.0
+    LumaContribution:
+      type: object
+      properties:
+        lumaContribution:
+          type: number
+          maximum: 1.0
+          minimum: 0.0
+          default: 1.0
