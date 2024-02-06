@@ -1,0 +1,364 @@
+openapi: 3.0.1
+info:
+  title: Audio Control API
+  description: API For controlling audio on Blackmagic Design Cameras
+  version: 0.1.0
+servers:
+  - url: /control/api/v1
+paths:
+  /audio/channel/{channelIndex}/input:
+    get:
+      summary: Get the audio input (source and type) for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Currently selected input
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/input"
+        "404":
+          description: Channel does not exist
+    put:
+      summary: Set the audio input for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/input"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid input
+        "404":
+          description: Channel does not exist
+  /audio/channel/{channelIndex}/input/description:
+    get:
+      summary: Get the description of the current input of the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Description of the current input of the selected channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/description"
+        "404":
+          description: Channel does not exist
+  /audio/channel/{channelIndex}/supportedInputs:
+    get:
+      summary: Get the list of supported inputs and their availability to switch to for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its supported inputs are being queried. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: The list of supported inputs
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/supportedInputs"
+        "404":
+          description: Channel does not exist
+  /audio/channel/{channelIndex}/level:
+    get:
+      summary: Get the audio input level for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Currently set level for the selected channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/level"
+        "404":
+          description: Channel does not exist
+    put:
+      summary: Set the audio input level for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/level"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Invalid input
+        "404":
+          description: Channel does not exist
+  /audio/channel/{channelIndex}/phantomPower:
+    get:
+      summary: Get the audio input phantom power for the selected channel if possible
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Currently set level for the selected channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/phantomPower"
+
+        "404":
+          description: Channel does not exist
+    put:
+      summary: Set the audio phantom power for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/phantomPower"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Phantom power is not supported for this input
+        "404":
+          description: Channel does not exist
+  /audio/channel/{channelIndex}/padding:
+    get:
+      summary: Get the audio input padding for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Currently set padding for the selected channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/padding"
+
+        "404":
+          description: Channel does not exist
+    put:
+      summary: Set the audio input padding for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/padding"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Padding is not supported for this input
+        "404":
+          description: Channel does not exist
+  /audio/channel/{channelIndex}/lowCutFilter:
+    get:
+      summary: Get the audio input low cut filter for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Currently set low cut filter for the selected channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/lowCutFilter"
+
+        "404":
+          description: Channel does not exist
+    put:
+      summary: Set the audio input low cut filter for the selected channel
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/lowCutFilter"
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Low cut filter is not supported for this input
+        "404":
+          description: Channel does not exist
+  /audio/channel/{channelIndex}/available:
+    get:
+      summary: Get the audio input's current availability for the selected channel. If unavailable, the source will be muted
+      parameters:
+        - name: channelIndex
+          in: path
+          description: The index of the channel that its input is being controlled. (Channels index from 0)
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Currently set availability for the selected channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/available"
+        "404":
+          description: Channel does not exist
+components:
+  schemas:
+    input:
+      type: object
+      properties:
+        input:
+          type: string
+          enum:
+            - None
+            - Camera - Left
+            - Camera - Right
+            - Camera - Mono
+            - XLR1 - Mic
+            - XLR1 - Line
+            - XLR2 - Mic
+            - XLR2 - Line
+            - 3.5mm Left - Line
+            - 3.5mm Left - Mic
+            - 3.5mm Right - Line
+            - 3.5mm Right - Mic
+            - 3.5mm Mono - Line
+            - 3.5mm Mono - Mic
+    description:
+      type: object
+      properties:
+        gainRange:
+          type: object
+          properties:
+            Min:
+              description: The minimum gain value in dB
+              type: number
+            Max:
+              description: The maximum gain value in dB
+              type: number
+        capabilities:
+          type: object
+          properties:
+            PhantomPower:
+              description: Input supports setting of phantom power
+              type: boolean
+            LowCutFilter:
+              description: Input supports setting of low cut filter
+              type: boolean
+            Padding:
+              type: object
+              properties:
+                available:
+                  description: Input supports setting of padding
+                  type: boolean
+                forced:
+                  description: Padding is forced to be set for the input
+                  type: boolean
+                value:
+                  description: Value of the padding in dB
+                  type: number
+    supportedInputs:
+      type: object
+      properties:
+        supportedInputs:
+          type: array
+          items:
+            type: object
+            properties:
+              schema:
+                $ref: "#/components/schemas/input"
+              available:
+                description: Is the input available to be switched into from the current input for the selected channel
+                type: boolean
+    level:
+      description: The input level of the selected channel. Only one property is required for setting. If both provided, gain will be prioritized and level would be ignored.
+      type: object
+      properties:
+        gain:
+          type: number
+        normalised:
+          type: number
+    phantomPower:
+      type: object
+      properties:
+        phantomPower:
+          type: boolean
+    padding:
+      type: object
+      properties:
+        padding:
+          type: boolean
+    lowCutFilter:
+      type: object
+      properties:
+        lowCutFilter:
+          type: boolean
+    available:
+      type: object
+      properties:
+        available:
+          type: boolean

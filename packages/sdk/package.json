@@ -1,0 +1,18 @@
+{
+  "name": "blackmagic-camera-control-rest-sdk",
+  "version": "0.1.0",
+  "description": "Node SDK generated from Blackmagic's Camera Control Rest API",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:GarthDB/blackmagic-camera-control.git"
+  },
+  "author": "Garth Braithwaite <garthdb@gmail.com> (http://garthdb.com/)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/GarthDB/blackmagic-camera-control/issues"
+  },
+  "homepage": "https://github.com/GarthDB/blackmagic-camera-control#readme",
+  "devDependencies": {}
+}

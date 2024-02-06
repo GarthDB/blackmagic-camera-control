@@ -1,0 +1,298 @@
+openapi: 3.0.1
+info:
+  title: System Control API
+  description: API for controlling the System Modes on Blackmagic Design products.
+  version: 1.0.0
+servers:
+  - url: /control/api/v1
+paths:
+  /system:
+    get:
+      summary: Get device system information.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SystemResponse"
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/supportedCodecFormats:
+    get:
+      summary: Get the list of supported codecs.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SupportedCodecFormats"
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/codecFormat:
+    get:
+      summary: Get the currently selected codec.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CodecFormat"
+        501:
+          description: This functionality is not implemented for the device in use.
+    put:
+      summary: Set the codec.
+      requestBody:
+        description: Update the system codec
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CodecFormat"
+      responses:
+        204:
+          description: No Content
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/videoFormat:
+    get:
+      summary: Get the currently selected video format.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetVideoFormat"
+        501:
+          description: This functionality is not implemented for the device in use.
+    put:
+      summary: Set the video format.
+      requestBody:
+        description: Update the system video format
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VideoFormat"
+      responses:
+        204:
+          description: No Content
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/supportedVideoFormats:
+    get:
+      summary: Get the list of supported video formats for the current system state.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SupportedVideoFormats"
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/supportedFormats:
+    get:
+      summary: Get supported formats.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SupportedFormats"
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/format:
+    get:
+      summary: Get current format.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Format"
+        501:
+          description: This functionality is not implemented for the device in use.
+    put:
+      summary: Set the format.
+      requestBody:
+        description: Update the system format
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Format"
+      responses:
+        204:
+          description: No Content
+        501:
+          description: This functionality is not implemented for the device in use.
+components:
+  schemas:
+    SystemResponse:
+      type: object
+      description: The properties will be populated only with the values that are supported/implemented by the device in use.
+      properties:
+        codecFormat:
+          $ref: "#/components/schemas/CodecFormat"
+        videoFormat:
+          $ref: "#/components/schemas/GetVideoFormat"
+    SupportedCodecFormats:
+      type: object
+      properties:
+        codecs:
+          type: array
+          items:
+            $ref: "#/components/schemas/CodecFormat"
+    CodecFormat:
+      type: object
+      properties:
+        codec:
+          type: string
+          description: Currently selected codec
+          example: ProRes:HQ
+        container:
+          type: string
+          description: Multimedia container format
+          example: MOV
+    SupportedVideoFormats:
+      type: object
+      properties:
+        formats:
+          type: array
+          items:
+            $ref: "#/components/schemas/VideoFormat"
+    FrameRate:
+      type: string
+      example: "29.97"
+      enum:
+        - "23.98"
+        - "24.00"
+        - "24"
+        - "25.00"
+        - "25"
+        - "29.97"
+        - "30.00"
+        - "30"
+        - "47.95"
+        - "48.00"
+        - "48"
+        - "50.00"
+        - "50"
+        - "59.94"
+        - "60.00"
+        - "60"
+        - "119.88"
+        - "120.00"
+        - "120"
+    VideoFormat:
+      type: object
+      properties:
+        frameRate:
+          $ref: "#/components/schemas/FrameRate"
+          description: Frame rate
+          example: "30"
+        height:
+          type: number
+          description: Height dimension of video format
+          example: 1920
+        width:
+          type: number
+          description: Width dimension of video format
+          example: 1080
+        interlaced:
+          type: boolean
+          description: Is the display format interlaced?
+          example: false
+    GetVideoFormat:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Video format serialised as a string
+          example: 1920x1080p29.97
+        frameRate:
+          $ref: "#/components/schemas/FrameRate"
+          description: Frame rate
+          example: "29.97"
+        height:
+          type: number
+          description: Height dimension of video format
+          example: 1920
+        width:
+          type: number
+          description: Width dimension of video format
+          example: 1080
+        interlaced:
+          type: boolean
+          description: Is the display format interlaced?
+          example: false
+    Format:
+      type: object
+      properties:
+        codec:
+          type: string
+          description: Currently selected codec
+          example: BRaw:8_1
+        frameRate:
+          $ref: "#/components/schemas/FrameRate"
+          description: Frame rate
+          example: "24"
+        maxOffSpeedFrameRate:
+          type: number
+          example: 60
+        minOffSpeedFrameRate:
+          type: number
+          example: 5
+        offSpeedEnabled:
+          type: boolean
+          example: false
+        offSpeedFrameRate:
+          type: number
+          example: 60
+        recordResolution:
+          $ref: "#/components/schemas/Resolution"
+        sensorResolution:
+          $ref: "#/components/schemas/Resolution"
+    Resolution:
+      type: object
+      properties:
+        height:
+          type: number
+          description: Height of the resolution
+          example: 2160
+        width:
+          type: number
+          description: Width of the resolution
+          example: 3840
+    SupportedFormats:
+      type: object
+      properties:
+        supportedFormats:
+          type: array
+          items:
+            $ref: "#/components/schemas/SupportedFormat"
+    SupportedFormat:
+      type: object
+      properties:
+        codecs:
+          type: array
+          items:
+            type: string
+            example: BRaw:Q0
+        frameRates:
+          type: array
+          items:
+            $ref: "#/components/schemas/FrameRate"
+        maxOffSpeedFrameRate:
+          type: number
+          example: 60
+        minOffSpeedFrameRate:
+          type: number
+          example: 5
+        recordResolution:
+          $ref: "#/components/schemas/Resolution"
+        sensorResolution:
+          $ref: "#/components/schemas/Resolution"

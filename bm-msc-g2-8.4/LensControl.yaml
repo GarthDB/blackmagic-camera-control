@@ -1,0 +1,126 @@
+openapi: 3.0.1
+info:
+  title: Lens Control API
+  description: API For controlling the lens on Blackmagic Design products
+  version: 0.1.0
+servers:
+  - url: /control/api/v1
+paths:
+  /lens/iris:
+    get:
+      summary: Get lens' aperture
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  continuousApertureAutoExposure:
+                    type: boolean
+                    description: Is Aperture controlled by auto exposure
+                  apertureStop:
+                    $ref: "#/components/schemas/apertureStop"
+                  normalised:
+                    $ref: "#/components/schemas/normalised"
+                  apertureNumber:
+                    $ref: "#/components/schemas/apertureNumber"
+    put:
+      summary: Set lens' aperture
+      requestBody:
+        description: Only a single property need to be selected. If multiple provided, the order of priority is (apertureStop > normalised > apertureNumber)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                apertureStop:
+                  $ref: "#/components/schemas/apertureStop"
+                normalised:
+                  $ref: "#/components/schemas/normalised"
+                apertureNumber:
+                  $ref: "#/components/schemas/apertureNumber"
+      responses:
+        200:
+          description: OK
+  /lens/zoom:
+    get:
+      summary: Get lens' zoom
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  focalLength:
+                    $ref: "#/components/schemas/focalLength"
+                  normalised:
+                    $ref: "#/components/schemas/normalised"
+    put:
+      summary: Set lens' zoom
+      requestBody:
+        description: Only a single property need to be selected. If multiple provided, the order of priority is (focalLength > normalised)
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                focalLength:
+                  $ref: "#/components/schemas/focalLength"
+                normalised:
+                  $ref: "#/components/schemas/normalised"
+      responses:
+        200:
+          description: OK
+  /lens/focus:
+    get:
+      summary: Get lens' focus
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  focus:
+                    $ref: "#/components/schemas/normalised"
+    put:
+      summary: Set lens' focus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                focus:
+                  $ref: "#/components/schemas/normalised"
+      responses:
+        200:
+          description: OK
+  /lens/focus/doAutoFocus:
+    put:
+      summary: Perform auto focus
+      responses:
+        200:
+          description: OK
+
+components:
+  schemas:
+    apertureStop:
+      type: number
+      description: Aperture stop value
+    normalised:
+      type: number
+      description: Normalised value
+      maximum: 1.0
+      minimum: 0.0
+    apertureNumber:
+      type: number
+      description: Aperture number
+    focalLength:
+      type: integer
+      description: Focal length in mm

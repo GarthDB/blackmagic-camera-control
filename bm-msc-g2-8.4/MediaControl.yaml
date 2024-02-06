@@ -1,0 +1,190 @@
+openapi: 3.0.1
+info:
+  title: Media Control API
+  description: API for controlling media devices in Blackmagic Design products.
+  version: 1.0.0
+servers:
+  - url: /control/api/v1
+paths:
+  /media/workingset:
+    get:
+      summary: Get the list of media devices currently in the working set.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workingset"
+  /media/active:
+    get:
+      summary: Get the currently active media device.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActiveMedia"
+    put:
+      summary: Set the currently active media device.
+      requestBody:
+        description: Set the specified index to be active
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                workingsetIndex:
+                  type: integer
+                  description: Working set index of the media to become active
+      responses:
+        204:
+          description: No Content
+  /media/devices/doformatSupportedFilesystems:
+    get:
+      summary: Get the list of filesystems available to format the device.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DoFormatSupportedFilesystems"
+  /media/devices/{deviceName}:
+    get:
+      summary: Get information about the selected device.
+      parameters:
+        - in: path
+          name: deviceName
+          schema:
+            type: string
+          required: true
+          description: Device name of the media device, as returned by deviceName member of Workingset or ActiveMedia
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaDeviceInformation"
+  /media/devices/{deviceName}/doformat:
+    get:
+      summary: Get a format key, used to format the device with a put request.
+      parameters:
+        - in: path
+          name: deviceName
+          schema:
+            type: string
+          required: true
+          description: Device name of the media device, as returned by deviceName member of Workingset or ActiveMedia
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                properties:
+                  deviceName:
+                    type: string
+                    description: Internal device name of this media device
+                  key:
+                    $ref: "#/components/schemas/FormatKey"
+    put:
+      summary: Perform a format of the media device.
+      parameters:
+        - in: path
+          name: deviceName
+          schema:
+            type: string
+          required: true
+          description: Device name of the media device, as returned by deviceName member of Workingset or ActiveMedia
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                key:
+                  $ref: "#/components/schemas/FormatKey"
+                filesystem:
+                  type: string
+                  description: Filesystem to format to (supportedFilesystems returns list of supported fileSystems)
+                volume:
+                  type: string
+                  description: Volume name to set for the disk after format
+      responses:
+        204:
+          description: No Content
+components:
+  schemas:
+    Workingset:
+      type: object
+      properties:
+        size:
+          type: integer
+          description: The fixed size of this device's working set
+        workingset:
+          type: array
+          required: [index]
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+                description: Index of this media in the working set
+                example: 0
+              activeDisk:
+                type: boolean
+                description: Is this current item the active disk
+                example: false
+              volume:
+                type: string
+                description: Volume name
+                example: My disk
+              deviceName:
+                type: string
+                description: Internal device name of this media device
+                example: sd1
+              remainingRecordTime:
+                type: integer
+                description: Remaining record time on media device in seconds
+                example: 5124087
+              totalSpace:
+                type: integer
+                description: Total space on media device in bytes
+                example: 9817071702016
+              remainingSpace:
+                type: integer
+                description: Remaining space on media device in bytes
+                example: 7817071702016
+              clipCount:
+                type: integer
+                description: Number of clips currently on the device
+                example: 12
+    ActiveMedia:
+      type: object
+      properties:
+        workingsetIndex:
+          type: integer
+          description: Working set index of the active media device
+          example: 0
+        deviceName:
+          type: string
+          description: Internal device name of this media device
+          example: sd1
+    DoFormatSupportedFilesystems:
+      type: array
+      example: [ExFat, HFS]
+      items:
+        type: string
+    MediaDeviceInformation:
+      type: object
+      properties:
+        state:
+          type: string
+          enum:
+            [None, Scanning, Mounted, Uninitialised, Formatting, RaidComponent]
+          description: The current state of the media device.
+    FormatKey:
+      type: string
+      description: The key used to format this device, it must be fetched with the GET request and then provided back with a PUT request

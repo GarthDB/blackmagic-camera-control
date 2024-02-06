@@ -1,0 +1,28 @@
+openapi: 3.0.1
+info:
+  title: Event Control API
+  description: API For working with built-in websocket.
+  version: 1.0.0
+servers:
+  - url: /control/api/v1
+paths:
+  /event/list:
+    get:
+      summary: Get the list of events that can be subscribed to using the websocket API.
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/eventsList"
+components:
+  schemas:
+    eventsList:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            type: string
+            description: List of events that can be subscribed to using the websocket API
